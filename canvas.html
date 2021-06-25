@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas></canvas>
+</body>
+
+<script>
+    let canvas = document.querySelector("canvas");
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    let ctx = canvas.getContext("2d");
+
+    ctx.beginPath(); // creates a new path
+    ctx.moveTo(100, 150); // initial point
+    ctx.lineTo(300, 300); // end point
+    ctx.strokeStyle = "blue";
+    ctx.lineWidth = 20;
+    ctx.stroke(); // used to print line
+
+    ctx.beginPath(); // without this, previous path continues and whole path becomes red (previous gets redrawed)
+    ctx.moveTo(300, 300);
+    ctx.lineTo(500, 200);
+    ctx.strokeStyle = "red";
+    ctx.stroke();
+
+    // PENDING
+    // ctx.strokeStyle = "orange";
+    // ctx.strokeRect(400, 400, 400, 400);
+    // ctx.fillRect(400, 400, 400, 400);
+
+    let img = document.createElement("img");
+    img.src = "1.jpg";
+    img.addEventListener("load", () => {
+        ctx.drawImage(img, 0, 0);
+    });
+</script>
+
+</html>

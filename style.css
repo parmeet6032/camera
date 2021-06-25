@@ -1,0 +1,194 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
+
+/* video container */
+
+.video-container {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: black;
+}
+
+video {
+    height: 100%;
+    width: 100%;
+}
+
+
+/* capture and record buttons */
+
+#record,
+#capture {
+    position: fixed;
+    right: 2rem;
+    height: 4rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    border: none;
+    background-color: black;
+    border: solid 2px white;
+    z-index: 3;
+}
+
+#record {
+    top: 50vh;
+}
+
+#capture {
+    top: 40vh;
+}
+
+.record-circle,
+.capture-circle {
+    height: 3rem;
+    width: 3rem;
+    margin: auto;
+    border-radius: 100%;
+}
+
+.capture-circle {
+    background-color: white;
+}
+
+.capture-animation {
+    animation: inOut 0.3s;
+}
+
+.record-circle {
+    background-color: red;
+}
+
+.record-animation {
+    animation: recordingSquare 0.5s infinite;
+}
+
+@keyframes inOut {
+    0% {
+        transform: scale(0.98);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(0.98);
+    }
+}
+
+@keyframes recordingSquare {
+    0% {
+        transform: scale(0.65);
+        border-radius: 15%;
+    }
+    50% {
+        transform: scale(0.7);
+        border-radius: 15%;
+    }
+    100% {
+        transform: scale(0.65);
+        border-radius: 15%;
+    }
+}
+
+
+/* camera filters */
+
+.filter-container {
+    height: 25rem;
+    width: 5rem;
+    position: fixed;
+    left: 2rem;
+    top: calc((100vh - 25rem) / 2);
+    border: 1px solid white;
+    border-bottom: none;
+    border-radius: 10px;
+    z-index: 3;
+}
+
+.filter {
+    height: calc(25rem / 6);
+    width: 100%;
+    border-bottom: 1px solid white;
+    background: url(portrait2.jpg);
+    background-size: contain;
+    background-blend-mode: soft-light;
+}
+
+.filter-top {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.filter-bottom {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+
+/* filter div element */
+
+.filter-div {
+    top: 0px;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    z-index: 1;
+}
+
+
+/* zoom options */
+
+.zoom-container {
+    height: 8rem;
+    width: 4rem;
+    position: fixed;
+    right: 2rem;
+    top: 8rem;
+    border: 1px solid white;
+    border-radius: 10px;
+    background-color: rgb(73, 69, 69);
+    z-index: 3;
+}
+
+.zoom-in,
+.zoom-out {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 32px;
+}
+
+.zoom-in .material-icons {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.zoom-out .material-icons {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+
+/* gallery button  */
+
+.gallery {
+    height: 4rem;
+    width: 4rem;
+    border-radius: 5px;
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    background: url(portrait2.jpg);
+    background-size: cover;
+}

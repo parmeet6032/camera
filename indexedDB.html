@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <input id="name" type="text" placeholder="DB name" value="DB">
+        <input id="version" type="number" placeholder="1.0" value="1">
+        <button id="create">Create</button>
+        <hr/>
+        <input type="text" id="note" placeholder="Enter note...">
+        <button id="add">Add Note</button>
+    </div>
+    <script>
+        let name = document.querySelector("#name");
+        let version = document.querySelector("#version");
+        let btn = document.querySelector("button#create");
+
+        let note = document.querySelector("#note");
+        let addBtn = document.querySelector("button#add");
+
+        let db, v, dbAccess;
+
+        btn.addEventListener("click", function() {
+            db = name.value;
+            v = version.value;
+
+            let request = indexedDB.open(db, v);
+            // success occurs when:-
+            // 1. New DB created
+            // 2. DB version increased
+            // 3. No version increased, existing DB opened
+            request.addEventListener("success", function() {
+                alert("db was created");
+                dbAccess = request.result;
+                viewNotes();
+            });
+
+            // upgradeneeded occurs when:-
+            // above points 1 and 2
+            request.addEventListener("upgradeneeded", function() {
+                alert("upgrade needed");
+                let DB = request.result;
+                // DB.createObjectStore("cs", {
+                //     keyPath: "nId"
+                // });
+            });
+
+            // occurs when there is some error 
+            request.addEventListener("error", function() {
+                alert("some error occured");
+            });
+        });
+
+        addBtn.addEventListener("click", function() {
+            let val = note.value;
+            if (!dbAccess) { // check if dbAccess not available
+                alert("Please open a database to add note");
+                return;
+            }
+
+            // DB --> Notes
+            // Notes --> cs
+            let tx = dbAccess.transaction("cs", "readwrite"); // transaction
+            let csObjectStore = tx.objectStore("cs"); // select object store
+            let data = {
+                nId: Date.now(),
+                noteValue: val
+            };
+            csObjectStore.add(data);
+        });
+
+        // print all existing notes to console
+        function viewNotes() {
+            // assumption is dbAccess is available
+            let tx = dbAccess.transaction("cs", "readonly"); // transaction
+            let csObjectStore = tx.objectStore("cs");
+            let req = csObjectStore.openCursor(); // this is a request
+
+            req.addEventListener("success", function() {
+                let cursor = req.result;
+                if (cursor) {
+                    console.log(cursor.value);
+                    cursor.continue(); // generates new request in 'req'
+                    // if success, then this whole 'function' in callback runs again
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>
