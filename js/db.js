@@ -11,7 +11,7 @@
 // Database: Camera
 // Version: 1
 let dbAccess;
-let request = indexedDB.open("Camera", 1);
+let request = indexedDB.open("Camera-App", 1);
 
 // occurs on success of request
 request.addEventListener("success", function() {
@@ -55,7 +55,7 @@ function viewMedia() {
     let galleryObjectStore = tx.objectStore("gallery");
     let req = galleryObjectStore.openCursor();
 
-    let container = document.querySelector(".container");
+    let container = document.querySelector(".media");
 
     req.addEventListener("success", function() {
         let cursor = req.result;
@@ -66,7 +66,7 @@ function viewMedia() {
                 <div class="media-container">
                 </div>
                 <div class="action-container">
-                    <button class="media-download">
+                    <button class="media-download" data-id="${cursor.value.mId}">
                         Download
                     </button>
                     <button class="media-delete" data-id="${cursor.value.mId}">
@@ -96,13 +96,15 @@ function viewMedia() {
 
                 downloadButton.addEventListener("click", (e) => {
                     let a = document.createElement("a");
-                    a.download = "image.jpg";
+                    let mId = e.currentTarget.parentElement.children[1].getAttribute("data-id");
+                    a.download = `image_${mId}.png`;
                     a.href = e.currentTarget.parentElement.parentElement.querySelector(".media-container").children[0].src;
                     a.click();
                     a.remove();
                 });
             } else {
                 let video = document.createElement("video");
+
                 video.classList.add("media-gallery");
                 video.src = window.URL.createObjectURL(cursor.value.media);
 
@@ -122,7 +124,8 @@ function viewMedia() {
 
                 downloadButton.addEventListener("click", (e) => {
                     let a = document.createElement("a");
-                    a.download = "video.mp4";
+                    let mId = e.currentTarget.parentElement.children[1].getAttribute("data-id");
+                    a.download = `video_${mId}.mp4`;
                     a.href = e.currentTarget.parentElement.parentElement.querySelector(".media-container").children[0].src;
                     a.click();
                     a.remove();
