@@ -117,7 +117,7 @@ video {
     height: calc(25rem / 6);
     width: 100%;
     border-bottom: 1px solid white;
-    background: url(portrait2.jpg);
+    background: url("../static/portrait2.jpg");
     background-size: contain;
     background-blend-mode: soft-light;
 }
@@ -189,6 +189,7 @@ video {
     position: fixed;
     right: 1rem;
     bottom: 1rem;
-    background: url(portrait2.jpg);
+    background: url("../static/portrait2.jpg");
     background-size: cover;
+    z-index: 3;
 }

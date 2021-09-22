@@ -168,3 +168,9 @@ zoomOut.addEventListener("click", function() {
         video.style.transform = `scale(${currZoom})`; // only changes on UI
     }
 });
+
+// *********** GALLERY ***********
+let galleryButton = document.querySelector(".gallery");
+galleryButton.addEventListener("click", () => {
+    location.assign("./gallery.html");
+});
